@@ -25,8 +25,9 @@ class MainActivity : AppCompatActivity() {
 
             when (item.itemId) {
                 R.id.nav_home -> selectedFragment = HomeFragment()
-                R.id.nav_products -> selectedFragment = ProductsFragment()
+                R.id.nav_estadistica -> selectedFragment = EstadisticaFragment()
                 R.id.nav_settings -> selectedFragment = SettingsFragment()
+                R.id.nav_control -> selectedFragment = ControlFragmente()
             }
 
             if (selectedFragment != null) {

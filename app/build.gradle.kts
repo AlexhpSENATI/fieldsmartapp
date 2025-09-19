@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.fieldsmart"
-    compileSdk = 36 // ⚠️ usa 34 (último estable) en lugar de 36
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.fieldsmart"
@@ -48,7 +48,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // 🔹 Firebase BOM (maneja versiones automáticamente)
+    //  Firebase BOM (maneja versiones automáticamente)
     implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
 
     // Firebase (solo una vez cada dependencia, sin repetir)
@@ -57,6 +57,10 @@ dependencies {
     implementation("com.google.firebase:firebase-database")
 
     implementation("com.google.android.material:material:1.12.0")
+
+    // Graficos xd
+    implementation("com.github.PhilJay:MPAndroidChart:3.1.0")
+
 
 
 

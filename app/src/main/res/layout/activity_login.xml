@@ -2,38 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center">
+    android:padding="24dp">
 
+    <!-- Campo de correo -->
     <EditText
-        android:id="@+id/etEmailLogin"
+        android:id="@+id/etCorreo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Correo electrónico"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"/>
 
+    <!-- Campo de contraseña -->
     <EditText
-        android:id="@+id/etPasswordLogin"
+        android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Contraseña"
         android:inputType="textPassword"
-        android:layout_marginTop="16dp"/>
+        android:padding="12dp"
+        android:layout_marginBottom="24dp"/>
 
+    <!-- Botón de iniciar sesión -->
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Iniciar Sesión"
-        android:layout_marginTop="24dp"/>
+        android:text="Iniciar Sesión"/>
 
-    <!-- 🔹 Texto clickeable para ir a registro -->
+    <!-- Texto para registrarse -->
     <TextView
-        android:id="@+id/tvGoRegister"
+        android:id="@+id/tvRegistrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="¿No tienes cuenta? Regístrate aquí"
         android:textColor="@android:color/holo_blue_dark"
-        android:layout_marginTop="16dp"/>
+        android:paddingTop="16dp"/>
+
 </LinearLayout>

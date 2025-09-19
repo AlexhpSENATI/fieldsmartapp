@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "222100498306",
+    "firebase_url": "https://aplicativo2-43c08-default-rtdb.firebaseio.com",
+    "project_id": "aplicativo2-43c08",
+    "storage_bucket": "aplicativo2-43c08.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:222100498306:android:bbf052856f1ee1bf9ad19b",
+        "android_client_info": {
+          "package_name": "com.example.fieldsmart"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCgOxmkZhW9hMCautUeQ7PJUkdiCsUVNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:222100498306:android:6e3e8d250e43896c9ad19b",
+        "android_client_info": {
+          "package_name": "com.senati.fieldsmart"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCgOxmkZhW9hMCautUeQ7PJUkdiCsUVNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

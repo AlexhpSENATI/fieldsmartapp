@@ -1,42 +1,41 @@
 package com.example.fieldsmart
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.fragment.app.Fragment
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var tvBienvenida: TextView
-    private lateinit var auth: FirebaseAuth
-    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        tvBienvenida = findViewById(R.id.tvBienvenida)
-        auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance().reference
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-        val usuario = auth.currentUser
-        usuario?.let {
-            val uid = it.uid
+        // Fragmento inicial
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, HomeFragment())
+                .commit()
+        }
 
-            // Buscar el nombre del usuario en la BD
-            database.child("usuarios").child(uid).get()
-                .addOnSuccessListener { snapshot ->
-                    if (snapshot.exists()) {
-                        val nombre = snapshot.child("nombre").value.toString()
-                        tvBienvenida.text = "Hola $nombre 👋"
-                    } else {
-                        tvBienvenida.text = "Hola 👋 (no encontré tu nombre en BD)"
-                    }
-                }
-                .addOnFailureListener {
-                    tvBienvenida.text = "Error al obtener datos"
-                }
+        bottomNav.setOnItemSelectedListener { item ->
+            var selectedFragment: Fragment? = null
+
+            when (item.itemId) {
+                R.id.nav_home -> selectedFragment = HomeFragment()
+                R.id.nav_products -> selectedFragment = ProductsFragment()
+                R.id.nav_settings -> selectedFragment = SettingsFragment()
+            }
+
+            if (selectedFragment != null) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.nav_host_fragment, selectedFragment)
+                    .commit()
+            }
+
+            true
         }
     }
 }

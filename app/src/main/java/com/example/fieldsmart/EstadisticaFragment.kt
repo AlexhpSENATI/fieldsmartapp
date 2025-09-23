@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Description
@@ -18,6 +19,7 @@ class EstadisticaFragment : Fragment() {
 
     private lateinit var barChart: BarChart
     private lateinit var database: DatabaseReference
+    private var valueEventListener: ValueEventListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,11 +30,11 @@ class EstadisticaFragment : Fragment() {
 
         database = FirebaseDatabase.getInstance().getReference("historial")
 
-        // 🔹 Escuchar SOLO el último registro
-        database.limitToLast(1).addValueEventListener(object : ValueEventListener {
+        // SOLO el último registro
+        valueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (!snapshot.exists()) {
-                    Log.d("FirebaseDebug", "No hay datos en historial")
+                if (!snapshot.exists() || !isAdded) {
+                    Log.d("FirebaseDebug", "No hay datos en historial o fragment destruido")
                     return
                 }
 
@@ -58,9 +60,9 @@ class EstadisticaFragment : Fragment() {
 
                     val dataSet = BarDataSet(entries, "Última medición").apply {
                         setColors(
-                            resources.getColor(android.R.color.holo_blue_dark, null),
-                            resources.getColor(android.R.color.holo_green_dark, null),
-                            resources.getColor(android.R.color.holo_red_dark, null)
+                            ContextCompat.getColor(requireContext(), android.R.color.holo_blue_dark),
+                            ContextCompat.getColor(requireContext(), android.R.color.holo_green_dark),
+                            ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
                         )
                     }
 
@@ -86,8 +88,14 @@ class EstadisticaFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {
                 Log.e("FirebaseDebug", "Error: ${error.message}")
             }
-        })
+        }
 
+        database.limitToLast(1).addValueEventListener(valueEventListener!!)
         return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        valueEventListener?.let { database.removeEventListener(it) }
     }
 }

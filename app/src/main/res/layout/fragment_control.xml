@@ -1,13 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/text_control"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="product"
-        android:textSize="20sp"/>
-</FrameLayout>
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modo de operación"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <Spinner
+            android:id="@+id/spinnerModo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/modos_array"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/editUmbralMin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Umbral mínimo (%)"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editUmbralMax"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Umbral máximo (%)"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editTiempoRiego"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tiempo de riego (segundos)"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editTiempoEspera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tiempo de espera (segundos)"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar configuración"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/btnEncender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Encender"
+                android:layout_marginEnd="16dp" />
+
+            <Button
+                android:id="@+id/btnApagar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apagar" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

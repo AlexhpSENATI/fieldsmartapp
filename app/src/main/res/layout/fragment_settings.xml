@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     android:padding="16dp">
 
     <LinearLayout
@@ -26,7 +27,7 @@
             android:id="@+id/txtNombreUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre Usuario"
+            android:text=""
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginBottom="24dp"/>

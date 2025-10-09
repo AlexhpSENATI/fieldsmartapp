@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class ControlFragmente : Fragment() {
@@ -19,6 +21,12 @@ class ControlFragmente : Fragment() {
     private lateinit var btnGuardar: Button
     private lateinit var btnEncender: Button
     private lateinit var btnApagar: Button
+
+    // 🔹 Nuevos elementos de usuario
+    private lateinit var tvSaludo: TextView
+    private lateinit var imgAvatar: ImageView
+    private val auth = FirebaseAuth.getInstance()
+    private val usuariosDB = FirebaseDatabase.getInstance().getReference("usuarios")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +46,14 @@ class ControlFragmente : Fragment() {
         btnEncender = view.findViewById(R.id.btnEncender)
         btnApagar = view.findViewById(R.id.btnApagar)
 
-        //  Cargar datos iniciales desde Firebase
+        // 🔹 Inicializar vistas del usuario
+        tvSaludo = view.findViewById(R.id.tvSaludo)
+        imgAvatar = view.findViewById(R.id.imgAvatar)
+
+        // 🔹 Cargar nombre y avatar
+        cargarDatosUsuario()
+
+        // --- Cargar datos iniciales desde Firebase ---
         database.child("config").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
@@ -54,7 +69,7 @@ class ControlFragmente : Fragment() {
                     editTiempoRiego.setText(tiempoRiego.toString())
                     editTiempoEspera.setText(tiempoEspera.toString())
 
-                    // Configurar
+                    // Configurar modo
                     if (modoAutomatico) {
                         spinnerModo.setSelection(1) // Automático
                     } else {
@@ -68,7 +83,7 @@ class ControlFragmente : Fragment() {
             }
         })
 
-        // Botón Guardar  actualiza configuraciones
+        // --- Botón Guardar ---
         btnGuardar.setOnClickListener {
             val modoSeleccionado = spinnerModo.selectedItem.toString()
             val modoAutomatico = modoSeleccionado == "Automático"
@@ -92,7 +107,7 @@ class ControlFragmente : Fragment() {
             Toast.makeText(requireContext(), "Configuración guardada", Toast.LENGTH_SHORT).show()
         }
 
-        // Botón Encender
+        // --- Botón Encender ---
         btnEncender.setOnClickListener {
             val config = mapOf(
                 "modoAutomatico" to false,
@@ -106,11 +121,11 @@ class ControlFragmente : Fragment() {
             Toast.makeText(requireContext(), "Bomba encendida (manual)", Toast.LENGTH_SHORT).show()
         }
 
-        // === Botón Apagar ===
+        // --- Botón Apagar ---
         btnApagar.setOnClickListener {
             val config = mapOf(
                 "modoAutomatico" to false,
-                "bombaManual" to false   // ✅ Apagado correcto
+                "bombaManual" to false
             )
 
             database.child("config").updateChildren(config)
@@ -121,5 +136,30 @@ class ControlFragmente : Fragment() {
         }
 
         return view
+    }
+
+    // Método para cargar nombre y avatar desde Firebase
+    private fun cargarDatosUsuario() {
+        val uid = auth.currentUser?.uid ?: return
+
+        usuariosDB.child(uid).get().addOnSuccessListener {
+            if (it.exists()) {
+                val nombre = it.child("nombre").value.toString()
+                val avatarUrl = it.child("avatar").value?.toString()
+
+                tvSaludo.text = "HOLA, $nombre"
+
+                if (!avatarUrl.isNullOrEmpty()) {
+                    Glide.with(this)
+                        .load(avatarUrl)
+                        .circleCrop()
+                        .into(imgAvatar)
+                }
+            } else {
+                tvSaludo.text = "HOLA, Usuario"
+            }
+        }.addOnFailureListener {
+            tvSaludo.text = "HOLA, Usuario"
+        }
     }
 }

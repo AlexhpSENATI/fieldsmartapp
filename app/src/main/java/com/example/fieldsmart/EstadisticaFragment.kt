@@ -5,14 +5,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class EstadisticaFragment : Fragment() {
@@ -21,16 +25,29 @@ class EstadisticaFragment : Fragment() {
     private lateinit var database: DatabaseReference
     private var valueEventListener: ValueEventListener? = null
 
+    // 🔹 Nuevos elementos para el saludo y avatar
+    private lateinit var tvSaludo: TextView
+    private lateinit var imgAvatar: ImageView
+    private val auth = FirebaseAuth.getInstance()
+    private val usuariosDB = FirebaseDatabase.getInstance().getReference("usuarios")
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_estadistica, container, false)
-        barChart = view.findViewById(R.id.barChart)
 
+        // --- Inicializar vistas ---
+        barChart = view.findViewById(R.id.barChart)
+        tvSaludo = view.findViewById(R.id.tvSaludo)
+        imgAvatar = view.findViewById(R.id.imgAvatar)
+
+        // --- Cargar nombre y avatar ---
+        cargarDatosUsuario()
+
+        // --- Configurar base de datos para el gráfico ---
         database = FirebaseDatabase.getInstance().getReference("historial")
 
-        // SOLO el último registro
         valueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (!snapshot.exists() || !isAdded) {
@@ -92,6 +109,31 @@ class EstadisticaFragment : Fragment() {
 
         database.limitToLast(1).addValueEventListener(valueEventListener!!)
         return view
+    }
+
+    // 🔹 Método para cargar nombre y avatar desde Firebase
+    private fun cargarDatosUsuario() {
+        val uid = auth.currentUser?.uid ?: return
+
+        usuariosDB.child(uid).get().addOnSuccessListener {
+            if (it.exists()) {
+                val nombre = it.child("nombre").value.toString()
+                val avatarUrl = it.child("avatar").value?.toString()
+
+                tvSaludo.text = "HOLA, $nombre"
+
+                if (!avatarUrl.isNullOrEmpty()) {
+                    Glide.with(this)
+                        .load(avatarUrl)
+                        .circleCrop()
+                        .into(imgAvatar)
+                }
+            } else {
+                tvSaludo.text = "HOLA, Usuario"
+            }
+        }.addOnFailureListener {
+            tvSaludo.text = "HOLA, Usuario"
+        }
     }
 
     override fun onDestroyView() {

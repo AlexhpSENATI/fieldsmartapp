@@ -1,45 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="24dp">
+    android:background="#000000"
+    android:padding="24dp"
+    tools:context=".LoginActivity">
+
+    <!-- Título -->
+    <TextView
+        android:id="@+id/txtTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="INICIAR SESIÓN"
+        android:textColor="@android:color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Logo principal -->
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="237dp"
+        android:layout_height="246dp"
+        android:layout_marginTop="28dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="Logo de FieldSmart"
+        android:scaleType="fitCenter"
+        android:src="@drawable/fieldsmart_logo"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtTitulo"
+        app:layout_constraintWidth_percent="0.55" />
+
+    <!-- Texto FIELDSMART -->
+    <ImageView
+        android:id="@+id/imgFieldsmart"
+        android:layout_width="253dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="12dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="Texto FieldSmart"
+        android:scaleType="fitCenter"
+        android:src="@drawable/fieldsmart_txt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgLogo"
+        app:layout_constraintWidth_percent="0.55" />
 
     <!-- Campo de correo -->
-    <EditText
-        android:id="@+id/etCorreo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutCorreo"
+        android:layout_width="356dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="32dp"
         android:hint="Correo electrónico"
-        android:inputType="textEmailAddress"
-        android:padding="12dp"
-        android:layout_marginBottom="16dp"/>
+        app:boxBackgroundMode="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgFieldsmart"
+        app:layout_constraintWidth_percent="0.8">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/white"
+            android:inputType="textEmailAddress"
+            android:paddingBottom="8dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="#BBBBBB" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Campo de contraseña -->
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutPassword"
+        android:layout_width="355dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
         android:hint="Contraseña"
-        android:inputType="textPassword"
-        android:padding="12dp"
-        android:layout_marginBottom="24dp"/>
+        app:boxBackgroundMode="none"
+        app:endIconMode="password_toggle"
+        app:endIconTint="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutCorreo"
+        app:layout_constraintWidth_percent="0.8">
 
-    <!-- Botón de iniciar sesión -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/white"
+            android:inputType="textPassword"
+            android:paddingBottom="8dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="#BBBBBB" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Botón Iniciar sesión -->
+
+    <!-- Texto de registro -->
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Iniciar Sesión"/>
+        android:layout_width="336dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="80dp"
+        android:backgroundTint="#FFFFFF"
+        android:paddingVertical="14dp"
+        android:text="Iniciar Sesión"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutPassword"
+        app:layout_constraintWidth_percent="0.7" />
 
-    <!-- Texto para registrarse -->
     <TextView
         android:id="@+id/tvRegistrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
         android:text="¿No tienes cuenta? Regístrate aquí"
-        android:textColor="@android:color/holo_blue_dark"
-        android:paddingTop="16dp"/>
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/text_configuracion"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="confi"
-        android:textSize="20sp"/>
-</FrameLayout>
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Avatar -->
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_person"
+            android:contentDescription="Avatar"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circle_background"/>
+
+        <!-- Nombre del usuario -->
+        <TextView
+            android:id="@+id/txtNombreUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre Usuario"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Botón Cambiar Avatar -->
+        <Button
+            android:id="@+id/btnCambiarAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cambiar Avatar"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Botón Cambiar Contraseña -->
+        <Button
+            android:id="@+id/btnCambiarContrasena"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cambiar Contraseña"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Botón Cerrar Sesión -->
+        <Button
+            android:id="@+id/btnCerrarSesion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cerrar Sesión"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/design_default_color_error"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+</ScrollView>

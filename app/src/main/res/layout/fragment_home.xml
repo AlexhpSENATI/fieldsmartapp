@@ -261,7 +261,7 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/img"
+                            android:src="@drawable/ic_bomba"
                             android:contentDescription="Icono Bomba"
                             app:tint="#0000FF" />
 
@@ -314,7 +314,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:contentDescription="Icono Modo"
-                        android:src="@drawable/img"
+                        android:src="@drawable/ic_modo"
                         app:tint="#FF00FF" />
 
                     <TextView
@@ -329,7 +329,9 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Información Adicional con Cuadros -->
+
+
+        <!-- INFO  ADICIONAL :v -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -338,210 +340,228 @@
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
-
-        <!-- Cuadro Tiempo de Uso -->
-        <com.google.android.material.card.MaterialCardView
+        <!-- PRIMERA FILA :v -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:cardBackgroundColor="#000000"
-            app:strokeColor="#FFFF00"
-            app:strokeWidth="2dp"
-            app:cardCornerRadius="8dp">
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <!-- Cuadro Tiempo de Uso -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tiempo de Uso"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:layout_marginBottom="8dp" />
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardBackgroundColor="#000000"
+                app:strokeColor="#FFFF00"
+                app:strokeWidth="2dp"
+                app:cardCornerRadius="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
+                    android:padding="12dp"
                     android:gravity="center">
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/img"
-                        android:contentDescription="Icono Tiempo"
-                        app:tint="#FFFF00" />
-
                     <TextView
-                        android:id="@+id/tvTiempoUso"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="--"
+                        android:text="Tiempo de Uso"
                         android:textColor="@android:color/white"
-                        android:textSize="24sp"
-                        android:layout_marginStart="8dp" />
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="8dp" />
 
-        <!-- Cuadro Último Riego -->
-        <com.google.android.material.card.MaterialCardView
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_tiempo"
+                            android:contentDescription="Icono Tiempo"
+                            app:tint="#FFFF00" />
+
+                        <TextView
+                            android:id="@+id/tvTiempoUso"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textColor="@android:color/white"
+                            android:textSize="24sp"
+                            android:layout_marginStart="8dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Cuadro Último Riego -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="0dp"
+                app:cardBackgroundColor="#000000"
+                app:strokeColor="#FF9900"
+                app:strokeWidth="2dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:text="Último Riego"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="Icono Riego"
+                            android:src="@drawable/ic_ultimo"
+                            app:tint="#FF9900" />
+
+                        <TextView
+                            android:id="@+id/tvUltimoRiego"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="--"
+                            android:textColor="@android:color/white"
+                            android:textSize="24sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <!-- SEGUNDA FILA :v -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:cardBackgroundColor="#000000"
-            app:strokeColor="#FF9900"
-            app:strokeWidth="2dp"
-            app:cardCornerRadius="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+            <!-- Cuadro En Espera -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Último Riego"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:layout_marginBottom="8dp" />
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardBackgroundColor="#000000"
+                app:strokeColor="#00FF99"
+                app:strokeWidth="2dp"
+                app:cardCornerRadius="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
+                    android:padding="12dp"
                     android:gravity="center">
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/img"
-                        android:contentDescription="Icono Riego"
-                        app:tint="#FF9900" />
-
                     <TextView
-                        android:id="@+id/tvUltimoRiego"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="--"
+                        android:text="En Espera"
                         android:textColor="@android:color/white"
-                        android:textSize="24sp"
-                        android:layout_marginStart="8dp" />
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="8dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_espera"
+                            android:contentDescription="Icono Espera"
+                            app:tint="#00FF99" />
+
+                        <TextView
+                            android:id="@+id/tvEnEspera"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textColor="@android:color/white"
+                            android:textSize="24sp"
+                            android:layout_marginStart="8dp" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
-        <!-- Cuadro En Espera -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:cardBackgroundColor="#000000"
-            app:strokeColor="#00FF99"
-            app:strokeWidth="2dp"
-            app:cardCornerRadius="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <!-- Cuadro Tiempo Re0stante -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="En Espera"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:layout_marginBottom="8dp" />
+                android:layout_weight="1"
+                android:layout_marginEnd="0dp"
+                app:cardBackgroundColor="#000000"
+                app:strokeColor="#9900FF"
+                app:strokeWidth="2dp"
+                app:cardCornerRadius="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
+                    android:padding="12dp"
                     android:gravity="center">
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/img"
-                        android:contentDescription="Icono Espera"
-                        app:tint="#00FF99" />
-
                     <TextView
-                        android:id="@+id/tvEnEspera"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="--"
+                        android:text="Tiempo Restante"
                         android:textColor="@android:color/white"
-                        android:textSize="24sp"
-                        android:layout_marginStart="8dp" />
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="8dp" />
 
-        <!-- Cuadro Tiempo Restante -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:cardBackgroundColor="#000000"
-            app:strokeColor="#9900FF"
-            app:strokeWidth="2dp"
-            app:cardCornerRadius="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tiempo Restante"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:layout_marginBottom="8dp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/img"
-                        android:contentDescription="Icono Timer"
-                        app:tint="#9900FF" />
-
-                    <TextView
-                        android:id="@+id/tvTiempoRestante"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="--"
-                        android:textColor="@android:color/white"
-                        android:textSize="24sp"
-                        android:layout_marginStart="8dp" />
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_restante"
+                            android:contentDescription="Icono Timer"
+                            app:tint="#9900FF" />
+
+                        <TextView
+                            android:id="@+id/tvTiempoRestante"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textColor="@android:color/white"
+                            android:textSize="24sp"
+                            android:layout_marginStart="8dp" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
         <!-- Cuadro IP -->
         <com.google.android.material.card.MaterialCardView
@@ -578,7 +598,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/img"
+                        android:src="@drawable/ic_ip"
                         android:contentDescription="Icono IP"
                         app:tint="#FF0099" />
 

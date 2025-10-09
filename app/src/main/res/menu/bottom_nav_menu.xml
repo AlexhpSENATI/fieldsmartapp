@@ -2,21 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_home"
-        android:icon="@android:drawable/ic_menu_view"
+        android:icon="@drawable/ic_dash"
         android:title="Inicio" />
     <item
         android:id="@+id/nav_estadistica"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:icon="@drawable/ic_estadistica"
         android:title="Estadistica" />
 
     <item
         android:id="@+id/nav_control"
-        android:icon="@android:drawable/ic_menu_edit"
+        android:icon="@drawable/ic_control"
         android:title="Control" />
     <item
         android:id="@+id/nav_settings"
-        android:icon="@android:drawable/ic_menu_manage"
+        android:icon="@drawable/ic_modo"
         android:title="Ajustes" />
 
-
-</menu>
+ </menu>

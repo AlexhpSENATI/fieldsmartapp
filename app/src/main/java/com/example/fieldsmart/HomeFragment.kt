@@ -102,16 +102,16 @@ class HomeFragment : Fragment() {
                 val sensores = snapshot.getValue(Sensores::class.java)
                 Log.d("FirebaseDebug", "Sensores: $sensores")
 
-                tvBomba.text = "Bomba: ${sensores?.bomba ?: "--"}"
-                tvHumedadSuelo.text = "Humedad suelo: ${sensores?.humedadSuelo?.toInt() ?: "--"}%"
-                tvHumedadAmbiental.text = "Humedad ambiental: ${sensores?.humedadAmbiental?.toInt() ?: "--"}%"
-                tvTemperatura.text = "Temperatura: ${sensores?.temperatura?.toInt() ?: "--"}°C"
-                tvModoAutomatico.text = "Modo automático: ${sensores?.modoAutomatico ?: "--"}"
-                tvTiempoUso.text = "Tiempo de uso: ${sensores?.tiempoUso?.toInt() ?: "--"} s"
-                tvUltimoRiego.text = "Último riego: ${sensores?.ultimoRiego?.toInt() ?: "--"}"
-                tvEnEspera.text = "En espera: ${sensores?.enEspera ?: "--"}"
-                tvTiempoRestante.text = "Tiempo restante: ${sensores?.tiempoRestanteEspera?.toInt() ?: "--"} s"
-                tvIP.text = "IP: ${sensores?.ip ?: "--"}"
+                tvBomba.text = " ${sensores?.bomba ?: "--"}"
+                tvHumedadSuelo.text = " ${sensores?.humedadSuelo?.toInt() ?: "--"}%"
+                tvHumedadAmbiental.text = " ${sensores?.humedadAmbiental?.toInt() ?: "--"}%"
+                tvTemperatura.text = " ${sensores?.temperatura?.toInt() ?: "--"}°C"
+                tvModoAutomatico.text = " ${sensores?.modoAutomatico ?: "--"}"
+                tvTiempoUso.text = "${sensores?.tiempoUso?.toInt() ?: "--"} s"
+                tvUltimoRiego.text = " ${sensores?.ultimoRiego?.toInt() ?: "--"}"
+                tvEnEspera.text = " ${sensores?.enEspera ?: "--"}"
+                tvTiempoRestante.text = " ${sensores?.tiempoRestanteEspera?.toInt() ?: "--"} s"
+                tvIP.text = " ${sensores?.ip ?: "--"}"
             }
 
             override fun onCancelled(error: DatabaseError) {

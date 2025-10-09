@@ -52,101 +52,547 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="⚡ Datos de Sensores"
+            android:text="-v. Datos de Sensores"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <!-- DATOS DE SENSORES -->
-        <TextView
-            android:id="@+id/tvBomba"
-            android:layout_width="wrap_content"
+        <!-- GRID PARA LOS CUADROS DE SENSORES -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bomba: --"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:padding="4dp" />
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
 
-        <TextView
-            android:id="@+id/tvHumedadSuelo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Humedad de suelo: --"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:padding="4dp" />
+            <!-- Cuadro Temperatura Ambiental -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardBackgroundColor="#000000"
+                app:strokeColor="#FF0000"
+                app:strokeWidth="2dp"
+                app:cardCornerRadius="8dp">
 
-        <TextView
-            android:id="@+id/tvHumedadAmbiental"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Humedad ambiental: --"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:padding="4dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center">
 
-        <TextView
-            android:id="@+id/tvTemperatura"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Temperatura: --"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:padding="4dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Temperatura\nAmbiental"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="8dp" />
 
-        <TextView
-            android:id="@+id/tvModoAutomatico"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Modo automático: --"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:padding="4dp" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
 
-        <TextView
-            android:id="@+id/tvTiempoUso"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tiempo de uso: --"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:padding="4dp" />
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_temperatura"
+                            android:contentDescription="Icono Temperatura"
+                            app:tint="#FF0000" />
 
-        <TextView
-            android:id="@+id/tvUltimoRiego"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Último riego: --"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:padding="4dp" />
+                        <TextView
+                            android:id="@+id/tvTemperatura"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- °C"
+                            android:textColor="@android:color/white"
+                            android:textSize="24sp"
+                            android:layout_marginStart="8dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:id="@+id/tvEnEspera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="En espera: --"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:padding="4dp" />
+            <!-- Cuadro Humedad Ambiental -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#000000"
+                app:strokeColor="#00FFFF"
+                app:strokeWidth="2dp"
+                app:cardCornerRadius="8dp">
 
-        <TextView
-            android:id="@+id/tvTiempoRestante"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tiempo restante: --"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:padding="4dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Humedad\nAmbiental"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="8dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_ambiental"
+                            android:contentDescription="Icono Humedad"
+                            app:tint="#00FFFF" />
+
+                        <TextView
+                            android:id="@+id/tvHumedadAmbiental"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- %"
+                            android:textColor="@android:color/white"
+                            android:textSize="24sp"
+                            android:layout_marginStart="8dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <!-- Cuadro Humedad de Suelo -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardBackgroundColor="#000000"
+                app:strokeColor="#00FF00"
+                app:strokeWidth="2dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Humedad\nde Suelo"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="8dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_suelo"
+                            android:contentDescription="Icono Suelo"
+                            app:tint="#00FF00" />
+
+                        <TextView
+                            android:id="@+id/tvHumedadSuelo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- %"
+                            android:textColor="@android:color/white"
+                            android:textSize="24sp"
+                            android:layout_marginStart="8dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Cuadro Estado de la Bomba -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#000000"
+                app:strokeColor="#0000FF"
+                app:strokeWidth="2dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Estado de\nla Bomba"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="8dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/img"
+                            android:contentDescription="Icono Bomba"
+                            app:tint="#0000FF" />
+
+                        <TextView
+                            android:id="@+id/tvBomba"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textColor="@android:color/white"
+                            android:textSize="24sp"
+                            android:layout_marginStart="8dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <!-- Cuadro Modo Operacion -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="#000000"
+            app:strokeColor="#FF00FF"
+            app:strokeWidth="2dp"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:text="Modo\nOperacion"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="Icono Modo"
+                        android:src="@drawable/img"
+                        app:tint="#FF00FF" />
+
+                    <TextView
+                        android:id="@+id/tvModoAutomatico"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="--"
+                        android:textColor="@android:color/white"
+                        android:textSize="24sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Información Adicional con Cuadros -->
         <TextView
-            android:id="@+id/tvIP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="IP: --"
+            android:layout_marginBottom="12dp"
+            android:text="Información Adicional"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:padding="4dp" />
+            android:textStyle="bold" />
+
+        <!-- Cuadro Tiempo de Uso -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="#000000"
+            app:strokeColor="#FFFF00"
+            app:strokeWidth="2dp"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tiempo de Uso"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/img"
+                        android:contentDescription="Icono Tiempo"
+                        app:tint="#FFFF00" />
+
+                    <TextView
+                        android:id="@+id/tvTiempoUso"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        android:textColor="@android:color/white"
+                        android:textSize="24sp"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Cuadro Último Riego -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="#000000"
+            app:strokeColor="#FF9900"
+            app:strokeWidth="2dp"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Último Riego"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/img"
+                        android:contentDescription="Icono Riego"
+                        app:tint="#FF9900" />
+
+                    <TextView
+                        android:id="@+id/tvUltimoRiego"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        android:textColor="@android:color/white"
+                        android:textSize="24sp"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Cuadro En Espera -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="#000000"
+            app:strokeColor="#00FF99"
+            app:strokeWidth="2dp"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="En Espera"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/img"
+                        android:contentDescription="Icono Espera"
+                        app:tint="#00FF99" />
+
+                    <TextView
+                        android:id="@+id/tvEnEspera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        android:textColor="@android:color/white"
+                        android:textSize="24sp"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Cuadro Tiempo Restante -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="#000000"
+            app:strokeColor="#9900FF"
+            app:strokeWidth="2dp"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tiempo Restante"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/img"
+                        android:contentDescription="Icono Timer"
+                        app:tint="#9900FF" />
+
+                    <TextView
+                        android:id="@+id/tvTiempoRestante"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        android:textColor="@android:color/white"
+                        android:textSize="24sp"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Cuadro IP -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="#000000"
+            app:strokeColor="#FF0099"
+            app:strokeWidth="2dp"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IP"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/img"
+                        android:contentDescription="Icono IP"
+                        app:tint="#FF0099" />
+
+                    <TextView
+                        android:id="@+id/tvIP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        android:textColor="@android:color/white"
+                        android:textSize="24sp"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </ScrollView>

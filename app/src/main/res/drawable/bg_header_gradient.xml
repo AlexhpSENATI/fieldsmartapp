@@ -1,0 +1,17 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Degradado de celeste claro a oscuro -->
+    <gradient
+        android:angle="270"
+        android:startColor="#A154E6"
+        android:endColor="#3914A4"
+        android:type="linear" />
+
+    <!-- Curvatura más cerrada -->
+    <corners
+        android:topLeftRadius="0dp"
+        android:topRightRadius="0dp"
+        android:bottomLeftRadius="110dp"
+        android:bottomRightRadius="110dp" />
+</shape>

@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF">
+
+
+    <!-- Fondo degradado más compacto -->
+    <LinearLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/bg_header_gradient"
+        android:elevation="4dp">
+
+        <!-- Texto centrado -->
+        <TextView
+            android:id="@+id/tvSaludo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bienvenido,"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            android:layout_marginTop="-40dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Avatar sobresalido -->
+    <ImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:src="@drawable/ic_person"
+        android:background="@drawable/circle_background"
+        android:scaleType="centerCrop"
+        android:padding="2dp"
+        android:layout_below="@id/layoutHeader"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-70dp"
+        android:elevation="8dp"
+        android:contentDescription="Avatar" />
+</RelativeLayout>

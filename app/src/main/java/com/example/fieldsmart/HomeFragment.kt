@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.lifecycle.ViewModelProvider
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -13,10 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class HomeFragment : Fragment() {
-
-    private lateinit var tvSaludo: TextView
-    private lateinit var imgAvatar: ImageView
-
+    //LLAMADO PARA LOS DATOS SE SENSORES DE FIREBASE XD
     private lateinit var tvBomba: TextView
     private lateinit var tvHumedadSuelo: TextView
     private lateinit var tvHumedadAmbiental: TextView
@@ -27,10 +25,12 @@ class HomeFragment : Fragment() {
     private lateinit var tvEnEspera: TextView
     private lateinit var tvTiempoRestante: TextView
     private lateinit var tvIP: TextView
-
     private lateinit var sensoresDB: DatabaseReference
-    private lateinit var usuariosDB: DatabaseReference
-    private val auth = FirebaseAuth.getInstance()
+
+    //LLAMADO PARA EL ENCABEZADO DE AVATAR Y NOMBRE
+    private lateinit var tvSaludo: android.widget.TextView
+    private lateinit var imgAvatar: android.widget.ImageView
+    private lateinit var viewModel: UsuarioViewModel
 
     private var sensoresListener: ValueEventListener? = null
 
@@ -40,10 +40,11 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        // --- Elementos de UI ---
+        //LLAMADO PARA EL ENCABEZADO DE AVATAR Y NOMBRE
         tvSaludo = view.findViewById(R.id.tvSaludo)
         imgAvatar = view.findViewById(R.id.imgAvatar)
 
+        //LLAMADO PARA LOS DATOS DEL SPE
         tvBomba = view.findViewById(R.id.tvBomba)
         tvHumedadSuelo = view.findViewById(R.id.tvHumedadSuelo)
         tvHumedadAmbiental = view.findViewById(R.id.tvHumedadAmbiental)
@@ -55,42 +56,34 @@ class HomeFragment : Fragment() {
         tvTiempoRestante = view.findViewById(R.id.tvTiempoRestante)
         tvIP = view.findViewById(R.id.tvIP)
 
-        // --- Firebase ---
+        //BASE DE DATOS PARA LOS DATOS
         sensoresDB = FirebaseDatabase.getInstance().getReference("sensores")
-        usuariosDB = FirebaseDatabase.getInstance().getReference("usuarios")
 
-        cargarDatosUsuario()
-        escucharDatosSensores()
+        tvSaludo = view.findViewById(R.id.tvSaludo)
+        imgAvatar = view.findViewById(R.id.imgAvatar)
 
-        return view
-    }
+        viewModel = ViewModelProvider(requireActivity())[UsuarioViewModel::class.java]
 
-    // --- Cargar nombre y avatar desde Firebase ---
-    private fun cargarDatosUsuario() {
-        val uid = auth.currentUser?.uid ?: return
-
-        usuariosDB.child(uid).get().addOnSuccessListener {
-            if (it.exists()) {
-                val nombre = it.child("nombre").value.toString()
-                val avatarUrl = it.child("avatar").value?.toString()
-
-                tvSaludo.text = "HOLA, $nombre"
-
-                if (!avatarUrl.isNullOrEmpty()) {
-                    Glide.with(this)
-                        .load(avatarUrl)
-                        .circleCrop()
-                        .into(imgAvatar)
-                }
-            } else {
-                tvSaludo.text = "HOLA, Usuario"
-            }
-        }.addOnFailureListener {
-            tvSaludo.text = "HOLA, Usuario"
+        viewModel.nombre.observe(viewLifecycleOwner) { nombre ->
+            tvSaludo.text = nombre
         }
+
+        viewModel.avatar.observe(viewLifecycleOwner) { bmp ->
+            bmp?.let { Glide.with(this).load(it).circleCrop().into(imgAvatar) }
+        }
+
+
+        //CARGAR DATOS DEL USUARIO
+        if (viewModel.nombre.value == null || viewModel.avatar.value == null) {
+            Hero.cargarUsuario(this, viewModel)
+        }
+
+        escucharDatosSensores()
+        return view
+
     }
 
-    // --- Escuchar cambios en los sensores ---
+    //ESCUCHAR DATOS DE LOS SENSORES
     private fun escucharDatosSensores() {
         sensoresListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -126,4 +119,5 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         sensoresListener?.let { sensoresDB.removeEventListener(it) }
     }
+
 }

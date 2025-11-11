@@ -2,8 +2,11 @@ package com.example.fieldsmart
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +16,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
+import java.io.ByteArrayOutputStream
 
 class SettingsFragment : Fragment() {
 
@@ -26,18 +30,19 @@ class SettingsFragment : Fragment() {
     private lateinit var btnCambiarAvatar: Button
     private lateinit var btnCambiarContrasena: Button
 
+    private lateinit var viewModel: UsuarioViewModel
+
     private val auth = FirebaseAuth.getInstance()
-    private val db = FirebaseDatabase.getInstance().reference.child("usuarios")
+    private val dbConfig = FirebaseDatabase.getInstance().reference.child("configuraciones")
+    private val dbUsuarios = FirebaseDatabase.getInstance().reference.child("usuarios")
 
-    private var imageUri: Uri? = null
-
-    // Activity Result Launcher para seleccionar imagen
-    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            imageUri = result.data?.data
-            imageUri?.let { uploadAvatar(it) }
+    private val pickImageLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val imageUri = result.data?.data
+                imageUri?.let { guardarAvatarEnConfiguraciones(it) }
+            }
         }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,80 +56,101 @@ class SettingsFragment : Fragment() {
         btnCambiarAvatar = view.findViewById(R.id.btnCambiarAvatar)
         btnCambiarContrasena = view.findViewById(R.id.btnCambiarContrasena)
 
+        viewModel = ViewModelProvider(requireActivity())[UsuarioViewModel::class.java]
+
         val uid = auth.currentUser?.uid
 
-        // Mostrar nombre y avatar desde Firebase
         if (uid != null) {
-            db.child(uid).get().addOnSuccessListener {
+            // 🔹 Obtener nombre del usuario
+            dbUsuarios.child(uid).get().addOnSuccessListener {
                 if (it.exists()) {
                     val nombre = it.child("nombre").value.toString()
-                    val avatarUrl = it.child("avatar").value?.toString()
-
                     txtNombre.text = nombre
-                    if (!avatarUrl.isNullOrEmpty()) {
-                        Glide.with(this).load(avatarUrl).circleCrop().into(imgAvatar)
-                    }
+                    viewModel.setNombre("HOLA, $nombre")
+                }
+            }
+
+            // 🔹 Cargar avatar desde tabla configuraciones
+            dbConfig.child(uid).child("avatar").get().addOnSuccessListener {
+                val avatarBase64 = it.value?.toString()
+                if (!avatarBase64.isNullOrEmpty()) {
+                    val bytes = Base64.decode(avatarBase64, Base64.DEFAULT)
+                    val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                    Glide.with(this).load(bmp).circleCrop().into(imgAvatar)
+                    viewModel.setAvatar(bmp)
                 }
             }
         }
 
-        // Botón cerrar sesión
         btnCerrarSesion.setOnClickListener {
             auth.signOut()
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             activity?.finish()
         }
 
-        // Botón cambiar contraseña
         btnCambiarContrasena.setOnClickListener {
             val email = auth.currentUser?.email
             email?.let {
-                auth.sendPasswordResetEmail(it).addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Revisa tu correo para cambiar la contraseña", Toast.LENGTH_LONG).show()
-                }.addOnFailureListener { e ->
-                    Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_LONG).show()
-                }
+                auth.sendPasswordResetEmail(it)
+                    .addOnSuccessListener {
+                        Toast.makeText(
+                            requireContext(),
+                            "Revisa tu correo para cambiar la contraseña",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_LONG)
+                            .show()
+                    }
             }
         }
 
-        // Botón cambiar avatar
         btnCambiarAvatar.setOnClickListener {
-            openImagePicker()
+            abrirGaleria()
         }
 
         return view
     }
 
-    // Abrir galería para elegir imagen
-    private fun openImagePicker() {
+    private fun abrirGaleria() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         pickImageLauncher.launch(intent)
     }
 
-    // Subir imagen a Firebase Storage y actualizar URL en Realtime Database
-    private fun uploadAvatar(uri: Uri) {
-        val uid = auth.currentUser?.uid
-        if (uid == null) {
-            Toast.makeText(requireContext(), "Usuario no autenticado", Toast.LENGTH_SHORT).show()
-            return
-        }
+    private fun guardarAvatarEnConfiguraciones(uri: Uri) {
+        val uid = auth.currentUser?.uid ?: return
 
-        // Referencia correcta en Firebase Storage
-        val avatarRef = FirebaseStorage.getInstance().getReference("avatars/$uid.jpg")
+        val inputStream = requireContext().contentResolver.openInputStream(uri)
+        val bitmap = BitmapFactory.decodeStream(inputStream)
+        val outputStream = ByteArrayOutputStream()
 
-        avatarRef.putFile(uri)
+        // 🔹 Comprimir imagen (70% calidad para reducir peso)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream)
+        val imageBytes = outputStream.toByteArray()
+        val base64Image = Base64.encodeToString(imageBytes, Base64.DEFAULT)
+
+        // 🔹 Guardar en tabla "configuraciones"
+        dbConfig.child(uid).child("avatar").setValue(base64Image)
             .addOnSuccessListener {
-                avatarRef.downloadUrl.addOnSuccessListener { downloadUrl ->
-                    db.child(uid).child("avatar").setValue(downloadUrl.toString())
-                        .addOnSuccessListener {
-                            Glide.with(this).load(downloadUrl).circleCrop().into(imgAvatar)
-                            Toast.makeText(requireContext(), "Avatar actualizado correctamente", Toast.LENGTH_SHORT).show()
-                        }
-                }
+                // Actualizar avatar en este fragmento
+                Glide.with(this).load(bitmap).circleCrop().into(imgAvatar)
+                // 🔹 Actualizar también el ViewModel compartido
+                viewModel.setAvatar(bitmap)
+
+                Toast.makeText(
+                    requireContext(),
+                    "Avatar guardado correctamente",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al subir la imagen: ${it.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Error al guardar: ${it.message}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
     }
 }

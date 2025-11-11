@@ -1,14 +1,14 @@
 {
   "project_info": {
-    "project_number": "222100498306",
-    "firebase_url": "https://aplicativo2-43c08-default-rtdb.firebaseio.com",
-    "project_id": "aplicativo2-43c08",
-    "storage_bucket": "aplicativo2-43c08.firebasestorage.app"
+    "project_number": "642293255398",
+    "firebase_url": "https://fieldsmartapp-659ad-default-rtdb.firebaseio.com",
+    "project_id": "fieldsmartapp-659ad",
+    "storage_bucket": "fieldsmartapp-659ad.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:222100498306:android:bbf052856f1ee1bf9ad19b",
+        "mobilesdk_app_id": "1:642293255398:android:9dfbd04a0a7bf71bd07f27",
         "android_client_info": {
           "package_name": "com.example.fieldsmart"
         }
@@ -16,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDCgOxmkZhW9hMCautUeQ7PJUkdiCsUVNM"
+          "current_key": "AIzaSyBSkkyyTslyd9NqSfj0XtsUZQ-vewfuM_Y"
         }
       ],
       "services": {
@@ -27,15 +27,15 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:222100498306:android:6e3e8d250e43896c9ad19b",
+        "mobilesdk_app_id": "1:642293255398:android:732d86818de3a13dd07f27",
         "android_client_info": {
-          "package_name": "com.senati.fieldsmart"
+          "package_name": "com.example.pruebidelappxd"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDCgOxmkZhW9hMCautUeQ7PJUkdiCsUVNM"
+          "current_key": "AIzaSyBSkkyyTslyd9NqSfj0XtsUZQ-vewfuM_Y"
         }
       ],
       "services": {

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.util.Log
+import androidx.lifecycle.ViewModelProvider
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -11,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class ControlFragmente : Fragment() {
-
+    //LLAMADO PARA LOS DATOS SE SENSORES DE FIREBASE XD
     private lateinit var database: DatabaseReference
     private lateinit var spinnerModo: Spinner
     private lateinit var editUmbralMin: EditText
@@ -22,11 +24,10 @@ class ControlFragmente : Fragment() {
     private lateinit var btnEncender: Button
     private lateinit var btnApagar: Button
 
-    // 🔹 Nuevos elementos de usuario
-    private lateinit var tvSaludo: TextView
-    private lateinit var imgAvatar: ImageView
-    private val auth = FirebaseAuth.getInstance()
-    private val usuariosDB = FirebaseDatabase.getInstance().getReference("usuarios")
+    //LLAMADO PARA EL ENCABEZADO DE AVATAR Y NOMBRE
+    private lateinit var tvSaludo: android.widget.TextView
+    private lateinit var imgAvatar: android.widget.ImageView
+    private lateinit var viewModel: UsuarioViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +37,6 @@ class ControlFragmente : Fragment() {
 
         database = FirebaseDatabase.getInstance().reference
 
-        // Referencias
         spinnerModo = view.findViewById(R.id.spinnerModo)
         editUmbralMin = view.findViewById(R.id.editUmbralMin)
         editUmbralMax = view.findViewById(R.id.editUmbralMax)
@@ -46,14 +46,25 @@ class ControlFragmente : Fragment() {
         btnEncender = view.findViewById(R.id.btnEncender)
         btnApagar = view.findViewById(R.id.btnApagar)
 
-        // 🔹 Inicializar vistas del usuario
+        // VISTAS DE  NOMBRE Y AVATAR
         tvSaludo = view.findViewById(R.id.tvSaludo)
         imgAvatar = view.findViewById(R.id.imgAvatar)
 
-        // 🔹 Cargar nombre y avatar
-        cargarDatosUsuario()
+        viewModel = ViewModelProvider(requireActivity())[UsuarioViewModel::class.java]
 
-        // --- Cargar datos iniciales desde Firebase ---
+        viewModel.nombre.observe(viewLifecycleOwner) { nombre ->
+            tvSaludo.text = nombre
+        }
+        viewModel.avatar.observe(viewLifecycleOwner) { bmp ->
+            bmp?.let { Glide.with(this).load(it).circleCrop().into(imgAvatar) }
+        }
+
+        // CARGAR TADOS DEL USUARIO
+        if (viewModel.nombre.value == null || viewModel.avatar.value == null) {
+            Hero.cargarUsuario(this, viewModel)
+        }
+
+        //CARGAR DATOS
         database.child("config").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
@@ -63,17 +74,15 @@ class ControlFragmente : Fragment() {
                     val tiempoRiego = snapshot.child("tiempoRiego").getValue(Int::class.java) ?: 0
                     val tiempoEspera = snapshot.child("tiempoEspera").getValue(Int::class.java) ?: 0
 
-                    // Llenar EditText con los valores de Firebase
                     editUmbralMin.setText(umbralMin.toString())
                     editUmbralMax.setText(umbralMax.toString())
                     editTiempoRiego.setText(tiempoRiego.toString())
                     editTiempoEspera.setText(tiempoEspera.toString())
 
-                    // Configurar modo
                     if (modoAutomatico) {
-                        spinnerModo.setSelection(1) // Automático
+                        spinnerModo.setSelection(1)
                     } else {
-                        spinnerModo.setSelection(0) // Manual
+                        spinnerModo.setSelection(0)
                     }
                 }
             }
@@ -83,11 +92,10 @@ class ControlFragmente : Fragment() {
             }
         })
 
-        // --- Botón Guardar ---
+        // BOTON DE GUARDAR
         btnGuardar.setOnClickListener {
             val modoSeleccionado = spinnerModo.selectedItem.toString()
             val modoAutomatico = modoSeleccionado == "Automático"
-            val bombaManual = !modoAutomatico
 
             val umbralMin = editUmbralMin.text.toString().toIntOrNull() ?: 0
             val umbralMax = editUmbralMax.text.toString().toIntOrNull() ?: 0
@@ -96,7 +104,6 @@ class ControlFragmente : Fragment() {
 
             val config = mapOf(
                 "modoAutomatico" to modoAutomatico,
-                "bombaManual" to bombaManual,
                 "umbralMin" to umbralMin,
                 "umbralMax" to umbralMax,
                 "tiempoRiego" to tiempoRiego,
@@ -107,7 +114,7 @@ class ControlFragmente : Fragment() {
             Toast.makeText(requireContext(), "Configuración guardada", Toast.LENGTH_SHORT).show()
         }
 
-        // --- Botón Encender ---
+        // BOTON DE ENCENDER
         btnEncender.setOnClickListener {
             val config = mapOf(
                 "modoAutomatico" to false,
@@ -121,7 +128,7 @@ class ControlFragmente : Fragment() {
             Toast.makeText(requireContext(), "Bomba encendida (manual)", Toast.LENGTH_SHORT).show()
         }
 
-        // --- Botón Apagar ---
+        // BOTON DE APAGAR
         btnApagar.setOnClickListener {
             val config = mapOf(
                 "modoAutomatico" to false,
@@ -138,28 +145,4 @@ class ControlFragmente : Fragment() {
         return view
     }
 
-    // Método para cargar nombre y avatar desde Firebase
-    private fun cargarDatosUsuario() {
-        val uid = auth.currentUser?.uid ?: return
-
-        usuariosDB.child(uid).get().addOnSuccessListener {
-            if (it.exists()) {
-                val nombre = it.child("nombre").value.toString()
-                val avatarUrl = it.child("avatar").value?.toString()
-
-                tvSaludo.text = "HOLA, $nombre"
-
-                if (!avatarUrl.isNullOrEmpty()) {
-                    Glide.with(this)
-                        .load(avatarUrl)
-                        .circleCrop()
-                        .into(imgAvatar)
-                }
-            } else {
-                tvSaludo.text = "HOLA, Usuario"
-            }
-        }.addOnFailureListener {
-            tvSaludo.text = "HOLA, Usuario"
-        }
-    }
 }

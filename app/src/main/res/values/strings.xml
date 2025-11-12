@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">FieldSmart</string>
 
+    <!-- Descripción accesible para el icono del Spinner -->
+    <string name="desc_spinner_icon">Flecha desplegable</string>
+
+    <!-- Opciones del Spinner -->
     <string-array name="modos_array">
         <item>Manual</item>
         <item>Automático</item>

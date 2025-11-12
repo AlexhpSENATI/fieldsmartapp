@@ -10,15 +10,20 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.text.SimpleDateFormat
 import java.util.Date
+import androidx.core.content.ContextCompat
 import java.util.Locale
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
+        window.decorView.systemUiVisibility = 0 // Íconos blancos
+
 
         auth = FirebaseAuth.getInstance()
 

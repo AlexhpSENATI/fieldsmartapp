@@ -1,0 +1,23 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Estado con foco (cuando haces clic) -->
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF"/> <!-- Fondo blanco -->
+            <stroke android:width="2dp" android:color="#5E04B4"/> <!-- Borde azul al enfocar -->
+            <corners android:radius="8dp"/> <!-- Bordes redondeados -->
+            <padding android:left="10dp" android:right="10dp" />
+        </shape>
+    </item>
+
+    <!-- Estado normal (sin foco) -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF"/> <!-- Fondo blanco -->
+            <stroke android:width="2dp" android:color="#BDBDBD"/> <!-- Borde gris claro -->
+            <corners android:radius="8dp"/>
+            <padding android:left="10dp" android:right="10dp" />
+        </shape>
+    </item>
+
+</selector>

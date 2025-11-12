@@ -5,9 +5,17 @@
     </style>
 
     <style name="fondo_barra" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">@color/white</item>
+        <item name="android:color">@color/medioverde</item>
+    </style>
+    <style name="SpinnerTextStyle" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="android:spinnerItemStyle">@layout/spinner_item</item>
+        <item name="android:spinnerDropDownItemStyle">@layout/spinner_dropdown_item</item>
     </style>
 
+    <style name="CustomActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">#D50000</item>
+    </style>
 
 
 

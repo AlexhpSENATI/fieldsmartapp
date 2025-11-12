@@ -1,25 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="0dp"
     android:background="#FFFFFF"
-    android:padding="0dp">
-    <!-- Saludo y avatar -->
-    <!-- ENCABEZADO: Nombre + Avatar -->
-    <LinearLayout
+    tools:context=".EstadisticaFragment">
+
+    <!-- ENCABEZADO -->
+    <include layout="@layout/include_encabezado" />
+
+    <!-- Contenedor principal con scroll -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:clipToPadding="false"
+        android:paddingBottom="24dp">
 
-        <!-- ENCABEZADO: Nombre + Avatar -->
-        <include layout="@layout/include_encabezado" />
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="8dp">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barChart"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginTop="16dp" />
+            <!-- Selector de fechas -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFechas"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                android:layout_marginVertical="8dp"
+                android:paddingHorizontal="8dp"
+                android:clipToPadding="false"
+                android:background="@android:color/transparent" />
 
+            <!-- Sección: Gráfico de Barras -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="20dp"> <!-- 👈 aumentado de 8dp a 20dp -->
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:src="@drawable/ic_diarioxd"
+                    app:tint="#5E04B4"
+                    android:contentDescription="Icono gráfico de barras" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rendimiento Diario:"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:textColor="#5E04B4"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                android:backgroundTint="#FFFFFF">
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/barChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_margin="8dp" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- Sección: Gráfico de Líneas -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp">
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:src="@drawable/ic_historico"
+                    app:tint="#5E04B4"
+                    android:contentDescription="Icono gráfico de líneas" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Histórico de Flujo :"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:textColor="#5E04B4"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                android:backgroundTint="#FFFFFF">
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/lineChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_margin="8dp" />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

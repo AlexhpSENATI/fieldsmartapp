@@ -29,9 +29,7 @@ class SettingsFragment : Fragment() {
     private lateinit var btnCerrarSesion: Button
     private lateinit var btnCambiarAvatar: Button
     private lateinit var btnCambiarContrasena: Button
-
     private lateinit var viewModel: UsuarioViewModel
-
     private val auth = FirebaseAuth.getInstance()
     private val dbConfig = FirebaseDatabase.getInstance().reference.child("configuraciones")
     private val dbUsuarios = FirebaseDatabase.getInstance().reference.child("usuarios")
@@ -61,7 +59,7 @@ class SettingsFragment : Fragment() {
         val uid = auth.currentUser?.uid
 
         if (uid != null) {
-            // 🔹 Obtener nombre del usuario
+
             dbUsuarios.child(uid).get().addOnSuccessListener {
                 if (it.exists()) {
                     val nombre = it.child("nombre").value.toString()
@@ -70,16 +68,24 @@ class SettingsFragment : Fragment() {
                 }
             }
 
-            // 🔹 Cargar avatar desde tabla configuraciones
             dbConfig.child(uid).child("avatar").get().addOnSuccessListener {
                 val avatarBase64 = it.value?.toString()
                 if (!avatarBase64.isNullOrEmpty()) {
                     val bytes = Base64.decode(avatarBase64, Base64.DEFAULT)
                     val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                    Glide.with(this).load(bmp).circleCrop().into(imgAvatar)
-                    viewModel.setAvatar(bmp)
+
+
+                    if (isAdded && view != null) {
+                        Glide.with(requireContext())
+                            .load(bmp)
+                            .circleCrop()
+                            .into(imgAvatar)
+
+                        viewModel.setAvatar(bmp)
+                    }
                 }
             }
+
         }
 
         btnCerrarSesion.setOnClickListener {
@@ -105,7 +111,6 @@ class SettingsFragment : Fragment() {
                     }
             }
         }
-
         btnCambiarAvatar.setOnClickListener {
             abrirGaleria()
         }
@@ -126,17 +131,16 @@ class SettingsFragment : Fragment() {
         val bitmap = BitmapFactory.decodeStream(inputStream)
         val outputStream = ByteArrayOutputStream()
 
-        // 🔹 Comprimir imagen (70% calidad para reducir peso)
+        //  Comprimir imagen 70%
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream)
         val imageBytes = outputStream.toByteArray()
         val base64Image = Base64.encodeToString(imageBytes, Base64.DEFAULT)
 
-        // 🔹 Guardar en tabla "configuraciones"
         dbConfig.child(uid).child("avatar").setValue(base64Image)
             .addOnSuccessListener {
-                // Actualizar avatar en este fragmento
+
                 Glide.with(this).load(bitmap).circleCrop().into(imgAvatar)
-                // 🔹 Actualizar también el ViewModel compartido
+
                 viewModel.setAvatar(bitmap)
 
                 Toast.makeText(

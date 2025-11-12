@@ -16,6 +16,8 @@ class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
+        window.decorView.systemUiVisibility = 0 // Íconos blancos
 
         // Pedir permiso de notificaciones en Android 13+
         askNotificationPermission()
